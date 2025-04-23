@@ -37,6 +37,10 @@ module.exports = {
       panelBorder: "#d4d4d8",
       overlayBackground: "#999a9b88",
       separatorLine: "#d4d4d888",
+      warning: "#f59e0b",
+      warningBg: "#fef3c7",
+      warningBgDark: "#fde68a",
+      warningText: "#92400e",
     },
   },
   plugins: [

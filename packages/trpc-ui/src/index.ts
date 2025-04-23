@@ -1,3 +1,3 @@
-export { renderTrpcPanel as renderTrpcPanel } from "./render";
+export { renderTrpcPanel } from "./render";
 export type { TRPCPanelMeta } from "./meta";
-export { parseRouterWithOptions } from "./parse/parseRouter";
+export { parseRouterWithOptions } from "@aeolun/trpc-router-parser";

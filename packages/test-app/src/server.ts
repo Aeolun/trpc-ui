@@ -1,11 +1,16 @@
 import express from "express";
-import { renderTrpcPanel } from "trpc-ui";
+import { renderTrpcPanel } from "@aeolun/trpc-ui";
 import connectLiveReload from "connect-livereload";
 import morgan from "morgan";
 import * as trpcExpress from "@trpc/server/adapters/express";
+import { applyWSSHandler } from "@trpc/server/adapters/ws";
 import cors from "cors";
 import { testRouter } from "./router.js";
 import dotenv from "dotenv";
+import { createServer } from "node:http";
+import { WebSocketServer } from "ws";
+import type { CreateWSSContextFnOptions } from "@trpc/server/adapters/ws";
+import compression from "compression";
 dotenv.config();
 
 const serverUrl = process.env.SERVER_URL || "http://localhost";
@@ -22,52 +27,75 @@ const simulateDelay = process.env.SIMULATE_DELAY === "true";
 if (!serverUrl) throw new Error("No SERVER_URL passed.");
 if (!trpcPath) throw new Error("No TRPC_PATH passed.");
 
-async function createContext(opts: trpcExpress.CreateExpressContextOptions) {
-  const authHeader = opts.req.headers["authorization"];
-  return {
-    authorized: !!authHeader,
-  };
+async function createExpressContext(
+	opts: trpcExpress.CreateExpressContextOptions,
+) {
+	const authHeader = opts.req.headers.authorization;
+	return {
+		authorized: !!authHeader,
+	};
+}
+
+async function createWSContext(opts: CreateWSSContextFnOptions) {
+	const connectionParams = opts.info.connectionParams;
+	console.log("Connection params:", connectionParams);
+	return {
+		authorized: !!connectionParams?.authorization,
+	};
 }
 
 const expressApp = express();
-expressApp.use(cors({ origin: "*" }));
+const httpServer = createServer(expressApp);
+const wss = new WebSocketServer({ server: httpServer });
+// Apply WebSocket handler
+const wssHandler = applyWSSHandler({
+	wss,
+	router: testRouter,
+	createContext: createWSContext,
+});
 
+expressApp.use(cors({ origin: "*" }));
+expressApp.use(compression());
 if (liveReload) {
-  expressApp.use(connectLiveReload());
+	expressApp.use(connectLiveReload());
 }
 
 if (simulateDelay) {
-  console.log("Simulating delay...");
-  expressApp.use((req, res, next) => {
-    setTimeout(() => {
-      next();
-      console.log("Next in timeout");
-    }, 1000);
-  });
+	console.log("Simulating delay...");
+	expressApp.use((req, res, next) => {
+		setTimeout(() => {
+			next();
+			console.log("Next in timeout");
+		}, 1000);
+	});
 }
 
 expressApp.use(morgan("short", {}));
 expressApp.use(
-  `/${trpcPath}`,
-  trpcExpress.createExpressMiddleware({
-    router: testRouter,
-    createContext,
-  })
+	`/${trpcPath}`,
+	trpcExpress.createExpressMiddleware({
+		router: testRouter,
+		createContext: createExpressContext,
+	}),
 );
 
 console.log("Starting at url ");
 console.log(`${serverUrl}${port ? `:${port}` : ""}/${trpcPath}`);
 
-expressApp.get("/", (_req, res) => {
-  console.log("Got request");
-  res.send(
-    renderTrpcPanel(testRouter as any, {
-      url: `${serverUrl}${
-        process.env.NODE_ENV === "production" ? "" : `:${port}`
-      }/${trpcPath}`,
-      transformer: "superjson",
-    })
-  );
+expressApp.get("/", async (_req, res) => {
+	console.log("Got request");
+	res.setHeader("Content-Type", "text/html");
+	const html = await renderTrpcPanel(testRouter, {
+		url: `${serverUrl}${
+			process.env.NODE_ENV === "production" ? "" : `:${port}`
+		}/${trpcPath}`,
+		transformer: "superjson",
+		cache: false,
+	});
+	res.send(html);
 });
 
-expressApp.listen(port ? port : 4000);
+httpServer.listen(port ? port : 4000, () => {
+	console.log(`Server running on port ${port || 4000}`);
+	console.log(`WebSocket server is ready at ws://localhost:${port || 4000}`);
+});

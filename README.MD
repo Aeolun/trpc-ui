@@ -2,7 +2,7 @@
 
 Probably the easiest and cheapest way to build a testing UI and documentation for your tRPC v11.0 endpoints. tRPC ui automatically generates a UI for manually testing your tRPC backend with 0 overhead:
 
-![Screenshot 2022-12-08 at 7 24 02 PM](https://user-images.githubusercontent.com/12774588/206602120-017a2b3a-66c3-4bf0-bd93-90fb4bddf0cc.png)
+![Screenshot 2022-12-08 at 7 24 02 PM](./docs/image.png)
 
 trpc panel moves as fast as your trpc backend with minimal effort.
 
@@ -10,7 +10,7 @@ Check out our [test app](https://trpc.aidansunbury.dev/)
 
 ## Fork Notice
 
-This is a fork of the original [tRPC panel](https://github.com/iway1/trpc-panel) project, which is now unmaintained. The [original author](https://github.com/iway1) deserves credit for the vast majority of the work done on this project.
+This is a fork of the fork [tRPC ui](https://github.com/aidansunbury/trpc-panel) project, which was forked from [tRPC panel](https://github.com/iway1/trpc-panel), which is now unmaintained. The [original author](https://github.com/iway1) deserves credit for the vast majority of the work done on this project.
 
 ## Features
 

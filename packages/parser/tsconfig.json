@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"module": "nodenext",
+		"outDir": "lib/esm/",
+		"target": "esnext",
+		"moduleResolution": "nodenext",
+		"declaration": true,
+		"isolatedModules": true,
+		"skipLibCheck": true,
+		"paths": {
+			"@src/*": ["./src/*"]
+		}
+	}
+}

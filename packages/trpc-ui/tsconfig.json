@@ -1,43 +1,36 @@
 {
-  "compilerOptions": {
-    "lib": [
-      "ESNext",
-      "dom",
-      "ES2022"
-    ], 
-    "outDir": "lib", 
-    "removeComments": true, 
-    "target": "ES6", 
-    "declaration": true,
-    "module": "ES2022",
-    "baseUrl": "./",
-    "rootDir": "./",
-    "esModuleInterop": true, 
-    "moduleResolution": "node", 
+	"compilerOptions": {
+		"lib": ["ESNext", "dom", "ES2022"],
+		"outDir": "lib",
+		"removeComments": true,
+		"target": "ES6",
+		"declaration": true,
+		"module": "ES2022",
+		"baseUrl": "./",
+		"rootDir": "./",
+		"esModuleInterop": true,
+		"moduleResolution": "node",
 
-    "sourceMap": true,
-    "sourceRoot": "/",
-    
+		"strict": true,
+		"sourceMap": true,
+		"sourceRoot": "/",
+		"skipLibCheck": true,
 
+		"alwaysStrict": true,
+		"allowUnreachableCode": false,
+		"noImplicitAny": true,
+		"strictNullChecks": true,
 
-    "alwaysStrict": true,
-    "allowUnreachableCode": false,
-    "noImplicitAny": true, 
-    "strictNullChecks": true, 
-
-    "noImplicitReturns": true,
-    "noUncheckedIndexedAccess": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true, 
-    "resolveJsonModule": true,
-    "jsx": "react",
-    "paths": {
-      "@src/*": ["./src/*"] 
-    }
-  },
-  "include": ["./src/**/*"],
-  "exclude": [
-    "node_modules/**/*",
-    "lib/**/*",
-  ],
+		"noImplicitReturns": true,
+		"noUncheckedIndexedAccess": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"resolveJsonModule": true,
+		"jsx": "react-jsx",
+		"paths": {
+			"@src/*": ["./src/*"]
+		}
+	},
+	"include": ["./src/**/*"],
+	"exclude": ["node_modules/**/*", "lib/**/*"]
 }

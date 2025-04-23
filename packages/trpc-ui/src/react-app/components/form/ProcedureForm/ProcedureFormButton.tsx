@@ -1,34 +1,35 @@
-import React from "react";
 import { SendIcon } from "../../icons/SendIcon";
 import { Button } from "../../Button";
 import { LoadingSpinner } from "./LoadingSpinner";
-import { ColorSchemeType } from "../../CollapsableSection";
+
+const colorSchemeToVariant = {
+	neutral: "bg-neutralSolid",
+	red: "bg-subscriptionSolid",
+};
 
 export function ProcedureFormButton({
-  text,
-  colorScheme: colorScheme,
-  loading,
+	text,
+	colorScheme,
+	loading,
 }: {
-  text: string;
-  colorScheme: ColorSchemeType;
-  loading: boolean;
+	text: string;
+	colorScheme: keyof typeof colorSchemeToVariant;
+	loading: boolean;
 }) {
-  return (
-    <Button
-      variant={colorScheme}
-      type="submit"
-      className="relative rounded-md self-stretch justify-center"
-      disabled={loading}
-    >
-      <div
-        className={
-          "flex flex-row" + (loading ? " opacity-0 pointer-events-none" : "")
-        }
-      >
-        {text}
-        <SendIcon className="w-5 h-5 ml-2" />
-      </div>
-      {loading && <LoadingSpinner />}
-    </Button>
-  );
+	return (
+		<Button
+			variant={colorScheme}
+			type="submit"
+			className={`relative rounded-md self-stretch justify-center ${colorSchemeToVariant[colorScheme]}`}
+			disabled={loading}
+		>
+			<div
+				className={`flex flex-row ${loading ? " opacity-0 pointer-events-none" : ""}`}
+			>
+				{text}
+				<SendIcon className="w-5 h-5 ml-2" />
+			</div>
+			{loading && <LoadingSpinner />}
+		</Button>
+	);
 }
