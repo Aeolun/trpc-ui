@@ -11,8 +11,13 @@
 		"build": "sh build.sh",
 		"dev": "esbuild src/react-app/index.tsx --bundle --loader:.svg=dataurl --outfile=lib/src/react-app/bundle.js --platform=node --target=node18 --format=esm --watch"
 	},
-	"author": "",
-	"license": "ISC",
+	"authors": [
+		{
+			"name": "Aeolun",
+			"email": "bart@serial-experiments.com"
+		}
+	],
+	"license": "MIT",
 	"exports": {
 		".": {
 			"types": "./lib/src/index.d.ts",

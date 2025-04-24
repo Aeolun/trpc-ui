@@ -3,6 +3,7 @@
 	"version": "1.0.0",
 	"type": "module",
 	"main": "src/server.ts",
+	"private": true,
 	"license": "MIT",
 	"dependencies": {
 		"@aeolun/trpc-ui": "workspace:^",
