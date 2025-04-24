@@ -17,7 +17,7 @@ export function createLinks(options: {
 	wsUrl?: string;
 	getHeaders: () => Record<string, string>;
 	subscriptionTransport?: "websocket" | "sse";
-	transformer?: "superjson";
+	transformer?: "superjson" | "json";
 }) {
 	// Create websocket client (only needed if using WebSocket transport)
 	const wsClient =
@@ -52,8 +52,9 @@ export function createLinks(options: {
 			: wsClient
 				? wsLink<typeof emptyRouter>({
 						client: wsClient,
-
-						transformer: superjson,
+						// @ts-expect-error: don't know if we want to work with a superjson transformer, and I don't want to make two separate code paths for with and without
+						transformer:
+							options.transformer === "superjson" ? superjson : undefined,
 					})
 				: undefined;
 
