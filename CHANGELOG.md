@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.1](https://github.com/Aeolun/trpc-ui/compare/1.1.0...1.1.1) (2025-04-24)
+
+### Bug Fixes
+
+* do not always give a subscriptionlink a superjson transformer ([efe1f9a](https://github.com/Aeolun/trpc-ui/commit/efe1f9a00334e8bbd2c56dd3b27116f6ab8add46))
+
 ## [1.1.0](https://github.com/Aeolun/trpc-ui/compare/1.0.9...1.1.0) (2025-04-24)
 
 ### Features
