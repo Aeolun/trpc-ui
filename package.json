@@ -1,19 +1,19 @@
 {
- "name": "trpc-ui",
- "version": "0.1.1",
- "license": "MIT",
- "scripts": {
-  "release": "release-it"
- },
- "private": true,
- "devDependencies": {
-  "@biomejs/biome": "^1.9.4",
-  "typescript": "^5.8.3"
- },
- "dependencies": {
-  "@aeolun/workspaces": "^4.2.6",
-  "@release-it/bumper": "^7.0.5",
-  "@release-it/conventional-changelog": "^10.0.1",
-  "release-it": "^19.0.1"
- }
+  "name": "trpc-ui",
+  "version": "1.0.9",
+  "license": "MIT",
+  "scripts": {
+    "release": "release-it"
+  },
+  "private": true,
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@aeolun/workspaces": "^4.2.6",
+    "@release-it/bumper": "^7.0.5",
+    "@release-it/conventional-changelog": "^10.0.1",
+    "release-it": "^19.0.1"
+  }
 }

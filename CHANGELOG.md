@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.9](https://github.com/Aeolun/trpc-ui/compare/1.0.8...1.0.9) (2025-04-24)
+
+### Bug Fixes
+
+* reset version ([3e9988c](https://github.com/Aeolun/trpc-ui/commit/3e9988cfca0ba365fbf62bb904f53bd6f0f4a3c4))
+
 ## [0.1.1](https://github.com/Aeolun/trpc-ui/compare/0.1.0...0.1.1) (2025-04-24)
 
 ### Bug Fixes
