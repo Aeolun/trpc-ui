@@ -60,6 +60,7 @@ function ClientProviders({
 			trpc.createClient({
 				links: createLinks({
 					url: options.url,
+					wsUrl: options.wsUrl,
 					getHeaders: headers.getHeaders,
 					subscriptionTransport: headers.subscriptionTransport,
 					transformer: options.transformer,

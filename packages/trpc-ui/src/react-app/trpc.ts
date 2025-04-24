@@ -14,6 +14,7 @@ import type { EventSourceLike } from "@trpc/server/unstable-core-do-not-import";
 // Create a function that generates the links configuration based on URL and headers
 export function createLinks(options: {
 	url: string;
+	wsUrl?: string;
 	getHeaders: () => Record<string, string>;
 	subscriptionTransport?: "websocket" | "sse";
 	transformer?: "superjson";
@@ -22,7 +23,7 @@ export function createLinks(options: {
 	const wsClient =
 		options.subscriptionTransport !== "sse"
 			? createWSClient({
-					url: options.url.replace(/^http/, "ws"),
+					url: options.wsUrl ?? options.url.replace(/^http/, "ws"),
 					connectionParams: () => {
 						console.log("connectionParams", options.getHeaders());
 						return options.getHeaders();

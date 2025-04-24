@@ -9,6 +9,7 @@ import {
 
 export type RenderOptions = {
 	url: string;
+	wsUrl?: string;
 	cache?: boolean;
 	subscriptionTransport?: "websocket" | "sse";
 } & TrpcPanelExtraOptions;
