@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.0](https://github.com/Aeolun/trpc-ui/compare/1.0.9...1.1.0) (2025-04-24)
+
+### Features
+
+* allow specifying a separate wsUrl in case the port is different ([eac1435](https://github.com/Aeolun/trpc-ui/commit/eac14353b539c4fe8b65bbe0087ae4b909f8e185))
+
 ## [1.0.9](https://github.com/Aeolun/trpc-ui/compare/1.0.8...1.0.9) (2025-04-24)
 
 ### Bug Fixes
