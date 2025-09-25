@@ -4,7 +4,7 @@ import { z } from "zod";
 import * as trpcExpress from "@trpc/server/adapters/express";
 import { TRPCError } from "@trpc/server";
 import { observable } from "@trpc/server/observable";
-import { EventEmitter } from "node:events";
+import { EventEmitter, on } from "node:events";
 import superjson from "superjson";
 
 type TRPCMeta = Record<string, unknown>;
@@ -30,7 +30,7 @@ async function createContext(opts: trpcExpress.CreateExpressContextOptions) {
 type ContextType = Awaited<ReturnType<typeof createContext>>;
 
 const PostSchema = z.object({
-	id: z.string().uuid(),
+	id: z.string(),
 	text: z.string().min(1),
 });
 
@@ -158,21 +158,16 @@ const multiRouter = {
 // TODO unimplemented
 const ee = new EventEmitter();
 const subscriptionRouter = t.router({
-	onAdd: t.procedure.subscription(() => {
-		// `resolve()` is triggered for each client when they start subscribing `onAdd`
-		// return an `observable` with a callback which is triggered immediately
-		return observable<Post>((emit) => {
-			const onAdd = (data: Post) => {
-				// emit data to client
-				emit.next(data);
-			};
-			// trigger `onAdd()` when `add` is triggered in our event emitter
-			ee.on("add", onAdd);
-			// unsubscribe function when client disconnects or stops subscribing
-			return () => {
-				ee.off("add", onAdd);
-			};
+	onAdd: t.procedure.subscription(async function* (opts) {
+		// listen for new events
+		const listener = on(ee, "add", {
+			// Passing the AbortSignal from the request automatically cancels the event emitter when the request is aborted
+			signal: opts.signal,
 		});
+		for await (const [data] of listener) {
+			const post = data as Post;
+			yield post;
+		}
 	}),
 	add: t.procedure.input(PostSchema).mutation(async ({ input }) => {
 		const post = { ...input }; /* [..] add to db */
@@ -190,6 +185,7 @@ enum Fruits {
 export const testRouter = t.router({
 	userRouter: userRouter,
 	postsRouter: postsRouter,
+	subscriptionRouter: subscriptionRouter,
 	utilityRouter: utilityRouter,
 	nestedRouters: t.router(multiRouter),
 	deeplyNestedRouter: t.router({

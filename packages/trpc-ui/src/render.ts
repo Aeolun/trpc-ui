@@ -1,4 +1,5 @@
 import type { AnyTRPCRouter } from "@trpc/server";
+import { createHash } from "node:crypto";
 import fs from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname } from "node:path";
@@ -12,6 +13,10 @@ export type RenderOptions = {
 	wsUrl?: string;
 	cache?: boolean;
 	subscriptionTransport?: "websocket" | "sse";
+	onContentSecurityPolicy?: (hashes: {
+		script: string;
+		style: string;
+	}) => void;
 } & TrpcPanelExtraOptions;
 
 const defaultParseRouterOptions: Partial<TrpcPanelExtraOptions> = {
@@ -56,13 +61,28 @@ function injectInString(
 
 // renders value should never change unless the server is restarted, just parse and inject once
 const cache: {
-	val: string | null;
+	val:
+		| {
+			html: string;
+			hashes: {
+				script: string;
+				style: string;
+			};
+		}
+		| null;
 } = {
 	val: null,
 };
 
+function createSha256Hash(content: string) {
+	return `sha256-${createHash("sha256").update(content).digest("base64")}`;
+}
+
 export function renderTrpcPanel(router: AnyTRPCRouter, options: RenderOptions) {
-	if (options.cache === true && cache.val) return cache.val;
+	if (options.cache === true && cache.val) {
+		options.onContentSecurityPolicy?.(cache.val.hashes);
+		return cache.val.html;
+	}
 
 	const bundleJs = fs.readFileSync(bundlePath).toString();
 	const indexHtml = fs.readFileSync(indexPath).toString();
@@ -86,13 +106,19 @@ export function renderTrpcPanel(router: AnyTRPCRouter, options: RenderOptions) {
 	const bundleInjected = injectParams(bundleJs, bundleInjectionParams);
 
 	// Safely handle script content
-	const script = `<script type="text/javascript">
-// TRPC Panel Bundle
+	const scriptContent = `// TRPC Panel Bundle
 ${bundleInjected}
 // End TRPC Panel Bundle
-</script>`;
+`;
+	const styleContent = indexCss;
 
-	const css = `<style>${indexCss}</style>`;
+	const scriptHash = createSha256Hash(scriptContent);
+	const styleHash = createSha256Hash(styleContent);
+
+	const script = `<script type="text/javascript">
+${scriptContent}</script>`;
+
+	const css = `<style>${styleContent}</style>`;
 	const htmlReplaceParams: InjectionParam[] = [
 		{
 			searchFor: javascriptReplaceSymbol,
@@ -103,6 +129,21 @@ ${bundleInjected}
 			injectString: css,
 		},
 	];
-	cache.val = injectParams(indexHtml, htmlReplaceParams);
-	return cache.val;
+
+	const html = injectParams(indexHtml, htmlReplaceParams);
+	const hashes = {
+		script: scriptHash,
+		style: styleHash,
+	};
+
+	options.onContentSecurityPolicy?.(hashes);
+
+	if (options.cache === true) {
+		cache.val = {
+			html,
+			hashes,
+		};
+	}
+
+	return html;
 }
