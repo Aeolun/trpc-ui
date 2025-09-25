@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.2](https://github.com/Aeolun/trpc-ui/compare/1.1.1...1.1.2) (2025-09-25)
+
+### Bug Fixes
+
+* emit csp sha256 ([48d356a](https://github.com/Aeolun/trpc-ui/commit/48d356ad3e9ab72d3309ac1548dc444304173891))
+
 ## [1.1.1](https://github.com/Aeolun/trpc-ui/compare/1.1.0...1.1.1) (2025-04-24)
 
 ### Bug Fixes

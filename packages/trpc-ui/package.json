@@ -1,6 +1,6 @@
 {
  "name": "@aeolun/trpc-ui",
- "version": "1.1.1",
+ "version": "1.1.2",
  "description": "UI for testing tRPC backends",
  "module": "lib/src/index.mjs",
  "typings": "lib/src/index.d.ts",
