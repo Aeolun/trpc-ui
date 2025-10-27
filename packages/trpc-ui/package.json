@@ -2,7 +2,9 @@
  "name": "@aeolun/trpc-ui",
  "version": "1.1.2",
  "description": "UI for testing tRPC backends",
- "module": "lib/src/index.mjs",
+ "type": "module",
+ "main": "lib/src/index.js",
+ "module": "lib/src/index.js",
  "typings": "lib/src/index.d.ts",
  "scripts": {
   "test": "vitest run --passWithNoTests",
