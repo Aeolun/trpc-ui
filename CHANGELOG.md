@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.3](https://github.com/Aeolun/trpc-ui/compare/1.1.2...1.1.3) (2025-10-27)
+
+### Bug Fixes
+
+* correct package.json exports configuration for ESM modules ([45a4b7b](https://github.com/Aeolun/trpc-ui/commit/45a4b7b8d5ce50f0db24702b77cfa9aa3f92841f))
+
 ## [1.1.2](https://github.com/Aeolun/trpc-ui/compare/1.1.1...1.1.2) (2025-09-25)
 
 ### Bug Fixes
