@@ -38,6 +38,7 @@ describe("Parse TRPC Procedure", () => {
 			extraData: {
 				...testQueryExpectedParseResult.extraData,
 				description,
+				meta: { description },
 			},
 		};
 
