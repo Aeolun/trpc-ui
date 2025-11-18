@@ -30,6 +30,12 @@ jobs:
 
       - run: pnpm install
 
+      - name: Run tests
+        run: pnpm -r test
+
+      - name: Build packages
+        run: pnpm -r build
+
       - name: Create release PR
         env:
           CI: 1
