@@ -4,11 +4,14 @@
   "license": "MIT",
   "scripts": {
     "release": "just-release",
-    "tsc": "pnpm run --if-present -r tsc"
+    "test": "pnpm run --if-present -r test",
+    "tsc": "pnpm run --if-present -r tsc",
+    "prepare": "husky"
   },
   "private": true,
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "husky": "^9.1.7",
     "just-release": "^0.6.0",
     "typescript": "^5.8.3"
   }

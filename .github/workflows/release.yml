@@ -33,8 +33,11 @@ jobs:
       - name: Run tests
         run: pnpm -r test
 
+      - name: "Build trpc-ui dist"
+        run: pnpm run --filter=@aeolun/trpc-ui build
+
       - name: Build packages
-        run: pnpm -r build
+        run: pnpm run tsc
 
       - name: Create release PR
         env:

@@ -1,6 +1,6 @@
 #!/bin/bash
 # First, transpile TypeScript
-tsc
+tsc --noEmit
 
 # Process CSS with Tailwind
 npx tailwindcss -i src/react-app/index.css -o lib/src/react-app/index.css
