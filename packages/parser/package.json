@@ -18,6 +18,7 @@
   }
  ],
  "license": "MIT",
+ "repository": "https://github.com/Aeolun/trpc-ui",
  "exports": {
   ".": {
    "types": "./lib/esm/src/index.d.ts",
