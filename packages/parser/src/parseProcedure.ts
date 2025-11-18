@@ -19,9 +19,13 @@ import type {
 } from "./parseNodeTypes.js";
 import { zodToJsonSchema } from "zod-to-json-schema";
 
+import type { Tag } from "./parseRouter.js";
+
 export type ProcedureExtraData = {
 	parameterDescriptions: { [path: string]: string };
 	description?: string;
+	meta?: Record<string, unknown>;
+	tags?: Tag[];
 };
 
 export type ParsedProcedure = {
@@ -148,6 +152,11 @@ export function parseProcedure(
 		return null;
 	}
 
+	const tags =
+		procedure._def.meta && options.extractTags
+			? options.extractTags(procedure._def.meta)
+			: undefined;
+
 	return {
 		inputSchema: nodeAndInput.schema,
 		node: nodeAndInput.node,
@@ -159,6 +168,10 @@ export function parseProcedure(
 			...(procedure._def.meta?.description && {
 				description: procedure._def.meta.description,
 			}),
+			...(procedure._def.meta && {
+				meta: procedure._def.meta,
+			}),
+			...(tags && { tags }),
 		},
 	};
 }

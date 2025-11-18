@@ -1,14 +1,15 @@
 {
-  "name": "trpc-ui",
-  "version": "1.1.4",
-  "license": "MIT",
-  "scripts": {
-    "release": "just-release"
-  },
-  "private": true,
-  "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
-    "just-release": "^0.6.0",
-    "typescript": "^5.8.3"
-  }
+	"name": "trpc-ui",
+	"version": "1.1.4",
+	"license": "MIT",
+	"scripts": {
+		"release": "just-release",
+		"tsc": "pnpm run --if-present -r tsc"
+	},
+	"private": true,
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4",
+		"just-release": "^0.6.0",
+		"typescript": "^5.8.3"
+	}
 }

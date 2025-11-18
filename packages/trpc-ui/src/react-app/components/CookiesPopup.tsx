@@ -4,10 +4,8 @@ import { BaseTextField } from "@src/react-app/components/form/fields/base/BaseTe
 import { FieldError } from "@src/react-app/components/form/fields/FieldError";
 import { Button } from "@src/react-app/components/Button";
 import toast from "react-hot-toast";
-import SaveIcon from "@mui/icons-material/Lock";
-import XIcon from "@mui/icons-material/Close";
 import { AddItemButton } from "@src/react-app/components/AddItemButton";
-import SyncIcon from "@mui/icons-material/Sync";
+import { BowlSteamIcon, FloppyDiskIcon, XIcon } from "@phosphor-icons/react";
 
 export function CookiesPopup() {
 	const {
@@ -97,7 +95,7 @@ export function CookiesPopup() {
 				</div>
 				<div className="px-4 py-2">
 					<div className="bg-blue-50 border border-blue-200 text-blue-800 rounded p-3 text-sm flex items-center dark:bg-blue-900/30 dark:border-blue-700 dark:text-blue-200">
-						<SyncIcon className="w-5 h-5 mr-2" />
+						<BowlSteamIcon className="w-5 h-5 mr-2" />
 						<span>
 							Cookies are automatically synced with your browser's cookie store.
 							Changes you make here will be saved to your browser and sent with
@@ -149,7 +147,7 @@ export function CookiesPopup() {
 				</div>
 				<div className="p-4 flex flex-row justify-end border-t border-t-panelBorder">
 					<Button variant="query" formNoValidate onClick={onConfirmClick}>
-						Confirm <SaveIcon className="ml-1" />
+						Confirm <FloppyDiskIcon className="ml-1" />
 					</Button>
 				</div>
 			</form>

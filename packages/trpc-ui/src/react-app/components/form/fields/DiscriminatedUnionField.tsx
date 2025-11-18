@@ -4,9 +4,8 @@ import { BaseSelectField } from "@src/react-app/components/form/fields/base/Base
 import { ObjectField } from "@src/react-app/components/form/fields/ObjectField";
 import { defaultFormValuesForNode } from "@src/react-app/components/form/utils";
 import { InputGroupContainer } from "@src/react-app/components/InputGroupContainer";
-import CirclesIcon from "@mui/icons-material/JoinRight";
-import MoonIcon from "@mui/icons-material/Brightness2";
 import { FieldError } from "@src/react-app/components/form/fields/FieldError";
+import { CirclesThreePlusIcon, MoonIcon } from "@phosphor-icons/react";
 
 export function DiscriminatedUnionField({
 	name,
@@ -47,7 +46,7 @@ export function DiscriminatedUnionField({
 	return (
 		<InputGroupContainer
 			title={label}
-			iconElement={<CirclesIcon className="mr-1" />}
+			iconElement={<CirclesThreePlusIcon className="mr-1" />}
 		>
 			<BaseSelectField
 				onChange={onDiscriminatorChange}

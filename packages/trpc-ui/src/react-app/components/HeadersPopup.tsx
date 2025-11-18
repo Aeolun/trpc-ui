@@ -4,9 +4,8 @@ import { BaseTextField } from "@src/react-app/components/form/fields/base/BaseTe
 import { FieldError } from "@src/react-app/components/form/fields/FieldError";
 import { Button } from "@src/react-app/components/Button";
 import toast from "react-hot-toast";
-import SaveIcon from "@mui/icons-material/Lock";
-import XIcon from "@mui/icons-material/Close";
 import { AddItemButton } from "@src/react-app/components/AddItemButton";
+import { FloppyDiskBackIcon, XIcon } from "@phosphor-icons/react";
 
 export function HeadersPopup() {
 	const {
@@ -135,7 +134,7 @@ export function HeadersPopup() {
 						/>
 					</span>
 					<Button variant="query" formNoValidate onClick={onConfirmClick}>
-						Confirm <SaveIcon className="ml-1" />
+						Confirm <FloppyDiskBackIcon className="ml-1" />
 					</Button>
 				</div>
 			</form>

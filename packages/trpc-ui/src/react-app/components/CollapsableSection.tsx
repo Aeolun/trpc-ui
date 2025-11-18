@@ -10,9 +10,11 @@ import {
 	solidColorBg,
 	solidColorBorder,
 } from "@src/react-app/components/style-utils";
+import type { Tag } from "@aeolun/trpc-router-parser";
 
 export type ColorSchemeType =
 	| "query"
+	| "primary"
 	| "mutation"
 	| "router"
 	| "neutral"
@@ -25,6 +27,7 @@ export function CollapsableSection({
 	sectionType,
 	isRoot,
 	focusOnScrollRef,
+	tags,
 }: {
 	titleElement: ReactNode;
 	fullPath: string[];
@@ -32,6 +35,7 @@ export function CollapsableSection({
 	sectionType: ColorSchemeType;
 	isRoot?: boolean;
 	focusOnScrollRef?: MutableRefObject<HTMLFormElement | null>;
+	tags?: Tag[];
 }) {
 	const { scrollToPathIfMatches } = useSiteNavigationContext();
 	const shown = useCollapsableIsShowing(fullPath);
@@ -72,15 +76,26 @@ export function CollapsableSection({
 					onClick={() => collapsables.toggle(fullPath)}
 					className="flex flex-row justify-between items-center p-1 "
 				>
-					<span className="flex flex-row">
+					<span className="flex flex-row items-center">
 						<SectionTypeLabel className="mr-2" sectionType={sectionType} />
 						{titleElement}
 					</span>
 
-					<Chevron
-						className={"w-4 h-4 mr-2 animate-transform transition-transform"}
-						direction={shown ? "up" : "down"}
-					/>
+					<span className="flex flex-row items-center gap-2">
+						{tags?.map((tag, i) => (
+							<span
+								key={i}
+								className="px-2 py-0.5 text-xs font-semibold rounded text-white"
+								style={{ backgroundColor: tag.color }}
+							>
+								{tag.text}
+							</span>
+						))}
+						<Chevron
+							className={"w-4 h-4 ml-2 animate-transform transition-transform"}
+							direction={shown ? "up" : "down"}
+						/>
+					</span>
 				</button>
 			) : (
 				titleElement

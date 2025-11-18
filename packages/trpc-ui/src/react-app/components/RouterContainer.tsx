@@ -2,6 +2,7 @@ import { CollapsableSection } from "@src/react-app/components/CollapsableSection
 import { ProcedureForm } from "@src/react-app/components/form/ProcedureForm";
 import type { ParsedRouter } from "@aeolun/trpc-router-parser";
 import cn from "clsx";
+import { useFilters, procedureMatchesFilters } from "@src/react-app/components/contexts/FilterContext";
 
 export function RouterContainer({
 	router,
@@ -11,6 +12,7 @@ export function RouterContainer({
 	name?: string;
 }) {
 	const isRoot = router.path.length === 0;
+	const { selectedTags } = useFilters();
 	return (
 		<CollapsableSection
 			fullPath={router.path}
@@ -32,6 +34,17 @@ export function RouterContainer({
 			>
 				{Object.entries(router.children).map(
 					([childName, routerOrProcedure]) => {
+						// Filter out procedures that don't match
+						if (
+							routerOrProcedure.nodeType === "procedure" &&
+							!procedureMatchesFilters(
+								routerOrProcedure.extraData.tags,
+								selectedTags,
+							)
+						) {
+							return null;
+						}
+
 						return (
 							<div key={childName}>
 								{routerOrProcedure.nodeType === "router" ? (

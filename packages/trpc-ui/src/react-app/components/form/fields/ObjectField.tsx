@@ -2,8 +2,8 @@ import { type ReactNode } from "react";
 import { type Control } from "react-hook-form";
 import type { ParsedInputNode } from "@aeolun/trpc-router-parser";
 import { Field } from "@src/react-app/components/form/Field";
-import ObjectIcon from "@mui/icons-material/DataObjectOutlined";
 import { InputGroupContainer } from "../../InputGroupContainer";
+import { ShippingContainerIcon } from "@phosphor-icons/react";
 
 export function ObjectField({
 	label,
@@ -37,7 +37,9 @@ export function ObjectField({
 	return (
 		<InputGroupContainer
 			title={label}
-			iconElement={overrideIconElement ?? <ObjectIcon className="mr-1" />}
+			iconElement={
+				overrideIconElement ?? <ShippingContainerIcon className="mr-1" />
+			}
 		>
 			{Object.entries(node.children).map(([childFieldName, e]) => (
 				<Field

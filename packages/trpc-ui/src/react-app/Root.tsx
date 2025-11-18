@@ -19,6 +19,7 @@ import { SearchOverlay } from "@src/react-app/components/SearchInputOverlay";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { trpc, createLinks } from "@src/react-app/trpc";
 import { CookiesPopup } from "./components/CookiesPopup";
+import { FilterContextProvider } from "@src/react-app/components/contexts/FilterContext";
 
 export function RootComponent({
 	rootRouter,
@@ -30,17 +31,19 @@ export function RootComponent({
 	return (
 		<HeadersContextProvider>
 			<AllPathsContextProvider rootRouter={rootRouter}>
-				<SiteNavigationContextProvider>
-					<ClientProviders options={options}>
-						<HotKeysContextProvider>
-							<SearchOverlay>
-								<div className="flex flex-col w-full h-full flex-1 relative">
-									<AppInnards rootRouter={rootRouter} />
-								</div>
-							</SearchOverlay>
-						</HotKeysContextProvider>
-					</ClientProviders>
-				</SiteNavigationContextProvider>
+				<FilterContextProvider>
+					<SiteNavigationContextProvider>
+						<ClientProviders options={options}>
+							<HotKeysContextProvider>
+								<SearchOverlay>
+									<div className="flex flex-col w-full h-full flex-1 relative">
+										<AppInnards rootRouter={rootRouter} />
+									</div>
+								</SearchOverlay>
+							</HotKeysContextProvider>
+						</ClientProviders>
+					</SiteNavigationContextProvider>
+				</FilterContextProvider>
 			</AllPathsContextProvider>
 		</HeadersContextProvider>
 	);

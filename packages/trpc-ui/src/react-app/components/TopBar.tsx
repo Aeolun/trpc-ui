@@ -1,15 +1,17 @@
 import * as React from "react";
 import { useHeadersContext } from "@src/react-app/components/contexts/HeadersContext";
-import MailLockIcon from "@mui/icons-material/MailLockOutlined";
-import CookieIcon from "@mui/icons-material/Cookie";
 import { LogoSvg } from "@src/react-app/components/LogoSvg";
 import { useIsMac } from "@src/react-app/components/hooks/useIsMac";
 import { Chevron } from "@src/react-app/components/Chevron";
-import Search from "@mui/icons-material/Search";
-import SwapVertIcon from "@mui/icons-material/SwapVert";
-import DownloadIcon from "@mui/icons-material/Download";
 import { useSearch } from "@src/react-app/components/contexts/SearchStore";
 import { Toggle } from "@src/react-app/components/Toggle";
+import {
+	CookieIcon,
+	DownloadIcon,
+	MagnifyingGlassIcon,
+	MailboxIcon,
+	NetworkIcon,
+} from "@phosphor-icons/react";
 
 function SubscriptionTransportToggle() {
 	const { subscriptionTransport, setSubscriptionTransport } =
@@ -23,7 +25,7 @@ function SubscriptionTransportToggle() {
 					setSubscriptionTransport(isSSE ? "sse" : "websocket")
 				}
 				leftLabel="WebSocket"
-				leftIcon={<SwapVertIcon className="w-6 h-6" />}
+				leftIcon={<NetworkIcon className="w-6 h-6" />}
 				rightLabel="SSE"
 				rightIcon={<DownloadIcon className="w-6 h-6" />}
 				leftTooltip="Use WebSocket for subscriptions"
@@ -91,7 +93,7 @@ export function TopBar({
 					onClick={() => setHeadersPopupShown(true)}
 					className="border border-neutralSolidTransparent py-2 px-4 text-neutralText font-bold rounded-sm shadow-sm flex items-center"
 				>
-					<MailLockIcon className="w-6 h-6 mr-1" />
+					<MailboxIcon className="w-6 h-6 mr-1" />
 					Headers
 					{headerCount > 0 && (
 						<span className="ml-1 bg-neutral-200 dark:bg-neutral-700 text-xs px-1.5 py-0.5 rounded-full">
@@ -118,7 +120,7 @@ export function RouterSearchTooltip() {
 			type="button"
 			className="flex flex-row items-center text-neutralSolidTransparent"
 		>
-			<Search fontSize="small" className="mr-2 color-neutralSolidTransparent" />
+			<MagnifyingGlassIcon className="mr-2 w-5 h-5 color-neutralSolidTransparent" />
 			{helperText}
 		</button>
 	);

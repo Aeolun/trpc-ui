@@ -85,12 +85,31 @@ console.log(`${serverUrl}${port ? `:${port}` : ""}/${trpcPath}`);
 expressApp.get("/", async (_req, res) => {
 	console.log("Got request");
 	res.setHeader("Content-Type", "text/html");
-	const html = await renderTrpcPanel(testRouter, {
+	const html = renderTrpcPanel(testRouter, {
 		url: `${serverUrl}${
 			process.env.NODE_ENV === "production" ? "" : `:${port}`
 		}/${trpcPath}`,
 		transformer: "superjson",
 		cache: false,
+		extractTags: (meta) => {
+			if (meta.role === "user") {
+				return [
+					{
+						text: "user",
+						color: "hotpink",
+					},
+				];
+			}
+			if (meta.role === "admin") {
+				return [
+					{
+						text: "admin",
+						color: "blue",
+					},
+				];
+			}
+			return [];
+		},
 	});
 	res.send(html);
 });

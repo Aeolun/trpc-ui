@@ -3,6 +3,7 @@ import { Button } from "../../Button";
 import { LoadingSpinner } from "./LoadingSpinner";
 
 const colorSchemeToVariant = {
+	primary: "bg-primarySolid",
 	neutral: "bg-neutralSolid",
 	red: "bg-subscriptionSolid",
 };

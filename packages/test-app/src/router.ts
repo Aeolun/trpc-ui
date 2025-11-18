@@ -81,23 +81,30 @@ const userRouter = t.router({
 });
 
 const postsRouter = t.router({
-	getAllPosts: t.procedure.query(() => {
-		return [
-			{
-				id: "asodifjaosdf",
-				text: "Post Id",
-			},
-			{
-				id: "asodifjaosdf",
-				text: "Post Id",
-			},
-			{
-				id: "asodifjaosdf",
-				text: "Post Id",
-			},
-		];
-	}),
+	getAllPosts: t.procedure
+		.meta({
+			role: "admin",
+		})
+		.query(() => {
+			return [
+				{
+					id: "asodifjaosdf",
+					text: "Post Id",
+				},
+				{
+					id: "asodifjaosdf",
+					text: "Post Id",
+				},
+				{
+					id: "asodifjaosdf",
+					text: "Post Id",
+				},
+			];
+		}),
 	createPost: t.procedure
+		.meta({
+			role: "user",
+		})
 		.input(
 			z.object({
 				text: z.string(),

@@ -61,9 +61,15 @@ function parseRouter(
 	return { children, nodeType: "router", path: routerPath };
 }
 
+export type Tag = {
+	text: string;
+	color: string; // CSS color value
+};
+
 export type TrpcPanelExtraOptions = {
 	logFailedProcedureParse?: boolean;
 	transformer?: "superjson";
+	extractTags?: (meta: Record<string, unknown>) => Tag[];
 };
 
 export function parseRouterWithOptions(

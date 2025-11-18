@@ -88,6 +88,8 @@ export function renderTrpcPanel(router: AnyTRPCRouter, options: RenderOptions) {
 	const indexHtml = fs.readFileSync(indexPath).toString();
 	const indexCss = fs.readFileSync(cssPath).toString();
 
+	console.log(`[trpc-ui] Loaded bundle: ${bundleJs.length} bytes at ${new Date().toISOString()}`);
+
 	const bundleInjectionParams: InjectionParam[] = [
 		{
 			searchFor: routerReplaceSymbol,

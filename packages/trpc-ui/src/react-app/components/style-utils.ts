@@ -5,6 +5,8 @@ export function solidColorBg(type: ColorSchemeType) {
 	switch (type) {
 		case "mutation":
 			return "bg-mutationSolid";
+		case "primary":
+			return "bg-primarySolid";
 		case "query":
 			return "bg-querySolid";
 		case "router":
@@ -22,6 +24,8 @@ export function solidColorBorder(type: ColorSchemeType) {
 	switch (type) {
 		case "mutation":
 			return "border-mutationSolid";
+		case "primary":
+			return "border-primarySolid";
 		case "query":
 			return "border-querySolid";
 		case "router":
@@ -39,6 +43,8 @@ export function backgroundColor(type: ColorSchemeType) {
 	switch (type) {
 		case "mutation":
 			return "bg-mutationBg";
+		case "primary":
+			return "bg-primaryBg";
 		case "neutral":
 			return "bg-neutralBg";
 		case "query":
@@ -56,6 +62,8 @@ export function backgroundColorDark(type: ColorSchemeType) {
 	switch (type) {
 		case "mutation":
 			return "bg-mutationBgDark";
+		case "primary":
+			return "bg-primaryBgDark";
 		case "neutral":
 			return "bg-neutralBgDark";
 		case "query":
@@ -73,6 +81,8 @@ export function textColor(type: ColorSchemeType) {
 	switch (type) {
 		case "mutation":
 			return "text-mutationText";
+		case "primary":
+			return "text-primaryText";
 		case "neutral":
 			return "text-neutralText";
 		case "query":

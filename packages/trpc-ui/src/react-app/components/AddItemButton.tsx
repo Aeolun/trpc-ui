@@ -1,4 +1,5 @@
-import AddIcon from "@mui/icons-material/Add";
+import { PlusIcon } from "@phosphor-icons/react";
+
 export function AddItemButton({
 	className,
 	onClick,
@@ -15,7 +16,7 @@ export function AddItemButton({
 			type="button"
 			onClick={onClick}
 		>
-			Add <AddIcon />
+			Add <PlusIcon />
 		</button>
 	);
 }

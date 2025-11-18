@@ -19,7 +19,7 @@ import type { ParsedInputNode } from "@aeolun/trpc-router-parser";
 import { DocumentationSection } from "@src/react-app/components/form/ProcedureForm/DescriptionSection";
 import { Field } from "@src/react-app/components/form/Field";
 import { ProcedureFormContextProvider } from "@src/react-app/components/form/ProcedureForm/ProcedureFormContext";
-import JSONEditor from "../JSONEditor";
+import JSONEditor from "../JSONTextarea";
 import {
 	SubscriptionHandler,
 	type SubscriptionData,
@@ -274,6 +274,7 @@ export function ProcedureForm({
 				fullPath={procedure.pathFromRootRouter}
 				sectionType={procedure.procedureType}
 				focusOnScrollRef={formRef}
+				tags={procedure.extraData.tags}
 			>
 				<form
 					className="flex flex-col space-y-4"
@@ -328,7 +329,7 @@ export function ProcedureForm({
 										? `Unsubscribe from ${name}`
 										: `Execute ${name}`
 								}
-								colorScheme={isSubscribed ? "red" : "neutral"}
+								colorScheme={isSubscribed ? "red" : "primary"}
 								loading={query.fetchStatus === "fetching" || mutation.isPending}
 							/>
 						</FormSection>

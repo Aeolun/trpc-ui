@@ -3,12 +3,11 @@ import { type Control, useController, useWatch } from "react-hook-form";
 import type { ParsedInputNode } from "@aeolun/trpc-router-parser";
 import { Field } from "../Field";
 import { defaultFormValuesForNode } from "@src/react-app/components/form/utils";
-import XIcon from "@mui/icons-material/CloseOutlined";
 import { InputGroupContainer } from "@src/react-app/components/InputGroupContainer";
-import DataArray from "@mui/icons-material/DataArray";
 import { AddItemButton } from "@src/react-app/components/AddItemButton";
 import { FieldError } from "@src/react-app/components/form/fields/FieldError";
 import { ROOT_VALS_PROPERTY_NAME } from "@src/react-app/components/form/ProcedureForm";
+import { ListIcon, XIcon } from "@phosphor-icons/react";
 
 let currentKeyCount = 0;
 
@@ -63,7 +62,7 @@ export function ArrayField({
 	}
 	return (
 		<InputGroupContainer
-			iconElement={<DataArray className="mr-1" />}
+			iconElement={<ListIcon className="mr-1" />}
 			title={label}
 		>
 			{field.value.map((_: ParsedInputNode, i: number) => (
