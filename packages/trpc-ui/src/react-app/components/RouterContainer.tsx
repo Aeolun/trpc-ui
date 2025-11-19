@@ -3,6 +3,8 @@ import { ProcedureForm } from "@src/react-app/components/form/ProcedureForm";
 import type { ParsedRouter } from "@aeolun/trpc-router-parser";
 import cn from "clsx";
 import { useFilters, procedureMatchesFilters } from "@src/react-app/components/contexts/FilterContext";
+import { routerHasMatchingDescendants } from "@src/react-app/utils/routerFiltering";
+import { useMemo } from "react";
 
 export function RouterContainer({
 	router,
@@ -13,6 +15,35 @@ export function RouterContainer({
 }) {
 	const isRoot = router.path.length === 0;
 	const { selectedTags } = useFilters();
+
+	const visibleChildren = useMemo(() => {
+		return Object.entries(router.children).filter(([, routerOrProcedure]) => {
+			// Filter out procedures that don't match
+			if (
+				routerOrProcedure.nodeType === "procedure" &&
+				!procedureMatchesFilters(
+					routerOrProcedure.extraData.tags,
+					selectedTags,
+				)
+			) {
+				return false;
+			}
+
+			// Filter out routers that have no matching descendants
+			if (
+				routerOrProcedure.nodeType === "router" &&
+				!routerHasMatchingDescendants(routerOrProcedure, selectedTags)
+			) {
+				return false;
+			}
+
+			return true;
+		});
+	}, [router.children, selectedTags]);
+
+	const hasActiveFilters = selectedTags.size > 0;
+	const hasNoResults = visibleChildren.length === 0 && hasActiveFilters;
+
 	return (
 		<CollapsableSection
 			fullPath={router.path}
@@ -32,35 +63,26 @@ export function RouterContainer({
 					!isRoot && "border-l-grey-400 space-y-1 p-1",
 				)}
 			>
-				{Object.entries(router.children).map(
-					([childName, routerOrProcedure]) => {
-						// Filter out procedures that don't match
-						if (
-							routerOrProcedure.nodeType === "procedure" &&
-							!procedureMatchesFilters(
-								routerOrProcedure.extraData.tags,
-								selectedTags,
-							)
-						) {
-							return null;
-						}
-
-						return (
-							<div key={childName}>
-								{routerOrProcedure.nodeType === "router" ? (
-									<RouterContainer
-										name={childName}
-										router={routerOrProcedure}
-									/>
-								) : (
-									<ProcedureForm
-										name={childName}
-										procedure={routerOrProcedure}
-									/>
-								)}
-							</div>
-						);
-					},
+				{hasNoResults && isRoot ? (
+					<div className="text-center py-8 text-gray-500">
+						No routers match all selected tags
+					</div>
+				) : (
+					visibleChildren.map(([childName, routerOrProcedure]) => (
+						<div key={childName}>
+							{routerOrProcedure.nodeType === "router" ? (
+								<RouterContainer
+									name={childName}
+									router={routerOrProcedure}
+								/>
+							) : (
+								<ProcedureForm
+									name={childName}
+									procedure={routerOrProcedure}
+								/>
+							)}
+						</div>
+					))
 				)}
 			</div>
 		</CollapsableSection>

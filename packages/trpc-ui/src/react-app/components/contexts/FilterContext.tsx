@@ -55,11 +55,16 @@ export function procedureMatchesFilters(
 
 	const isUntagged = !procedureTags || procedureTags.length === 0;
 
-	// If "UNTAGGED" is selected and this procedure is untagged
-	if (selectedTags.has(UNTAGGED_TAG.text) && isUntagged) {
-		// If ONLY "UNTAGGED" is selected, show it
-		if (selectedTags.size === 1) return true;
-		// If other tags are also selected, untagged procedures don't match
+	// If "UNTAGGED" is selected
+	if (selectedTags.has(UNTAGGED_TAG.text)) {
+		// If this procedure is untagged
+		if (isUntagged) {
+			// If ONLY "UNTAGGED" is selected, show it
+			if (selectedTags.size === 1) return true;
+			// If other tags are also selected, untagged procedures don't match
+			return false;
+		}
+		// If this procedure has tags and UNTAGGED is selected, don't show it
 		return false;
 	}
 
@@ -67,9 +72,8 @@ export function procedureMatchesFilters(
 	if (isUntagged) return false;
 
 	const procedureTagTexts = new Set(procedureTags.map((t) => t.text));
-	// Must match ALL selected filters (AND logic), excluding UNTAGGED
+	// Must match ALL selected filters (AND logic)
 	for (const selectedTag of selectedTags) {
-		if (selectedTag === UNTAGGED_TAG.text) continue;
 		if (!procedureTagTexts.has(selectedTag)) {
 			return false;
 		}
