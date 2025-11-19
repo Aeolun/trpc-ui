@@ -49,3 +49,6 @@ stats.html
 
 # yarn
 .yarn
+
+# Claude Code local settings
+.claude/settings.local.json
