@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.0 (2025-11-19)
+
+### Features
+
+- improve tag filtering with empty router hiding and UNTAGGED fix
+
 ## 1.3.0 (2025-11-18)
 
 ### Features

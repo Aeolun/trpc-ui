@@ -1,6 +1,6 @@
 {
   "name": "trpc-ui",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "license": "MIT",
   "scripts": {
     "dev": "concurrently --names \"ui,app\" -c \"blue,green\" \"pnpm -C packages/trpc-ui dev\" \"pnpm -C packages/test-app dev\"",
