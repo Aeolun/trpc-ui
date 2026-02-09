@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.1 (2026-02-09)
+
+### Bug Fixes
+
+- correct CSP script hash mismatch due to leading newline
+
 ## 1.4.0 (2025-11-19)
 
 ### Features
