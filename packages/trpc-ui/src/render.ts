@@ -107,8 +107,8 @@ export function renderTrpcPanel(router: AnyTRPCRouter, options: RenderOptions) {
 	];
 	const bundleInjected = injectParams(bundleJs, bundleInjectionParams);
 
-	// Safely handle script content
-	const scriptContent = `// TRPC Panel Bundle
+	const scriptContent = `
+// TRPC Panel Bundle
 ${bundleInjected}
 // End TRPC Panel Bundle
 `;
@@ -117,8 +117,7 @@ ${bundleInjected}
 	const scriptHash = createSha256Hash(scriptContent);
 	const styleHash = createSha256Hash(styleContent);
 
-	const script = `<script type="text/javascript">
-${scriptContent}</script>`;
+	const script = `<script type="text/javascript">${scriptContent}</script>`;
 
 	const css = `<style>${styleContent}</style>`;
 	const htmlReplaceParams: InjectionParam[] = [
