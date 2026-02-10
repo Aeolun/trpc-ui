@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.0 (2026-02-10)
+
+### Features
+
+- improve form field accessibility, validation, and styling
+
 ## 1.4.1 (2026-02-09)
 
 ### Bug Fixes
