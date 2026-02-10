@@ -8,8 +8,6 @@ import type { RenderOptions } from "@src/render";
 const routerDefinition: ParsedRouter =
 	"{{parsed_router}}" as unknown as ParsedRouter;
 
-console.log("routerdefinition", routerDefinition);
-
 // Here are other options
 export const options = "{{options}}" as unknown as RenderOptions;
 const rootElement = document.getElementById("root");

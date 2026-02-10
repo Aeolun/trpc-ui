@@ -9,7 +9,7 @@ export function Button({
 	return (
 		<button
 			{...props}
-			className={`p-2 text-white rounded-md text-base flex flex-row items-center self-end border-2 border-transparent focus:border-yellow-500 ${props.className} ${solidColorBg(variant)}`}
+			className={`p-2 text-white rounded-md text-base flex flex-row items-center self-end ${props.className} ${solidColorBg(variant)}`}
 		/>
 	);
 }

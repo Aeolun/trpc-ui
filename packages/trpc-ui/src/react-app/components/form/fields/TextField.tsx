@@ -23,8 +23,8 @@ export function TextField({
 			value={field.value ? field.value : ""}
 			onChange={field.onChange}
 			errorMessage={fieldState.error?.message}
-			label={`${label}${inputNode.optional ? "" : "*"}`}
-			fieldId={inputNode.path.join(".")}
+			label={label}
+			required={!inputNode.optional}
 		/>
 	);
 }

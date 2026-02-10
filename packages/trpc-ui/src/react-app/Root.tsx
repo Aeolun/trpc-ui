@@ -1,4 +1,4 @@
-import { type ReactNode, useMemo, useState } from "react";
+import { type ReactNode, useEffect, useRef, useMemo, useState } from "react";
 import { RouterContainer } from "./components/RouterContainer";
 import type { ParsedRouter } from "@aeolun/trpc-router-parser";
 import type { RenderOptions } from "@src/render";
@@ -58,24 +58,29 @@ function ClientProviders({
 }) {
 	const headers = useHeaders();
 
-	const trpcClient = useMemo(
-		() =>
-			trpc.createClient({
-				links: createLinks({
-					url: options.url,
-					wsUrl: options.wsUrl,
-					getHeaders: headers.getHeaders,
-					subscriptionTransport: headers.subscriptionTransport,
-					transformer: options.transformer,
-				}),
-			}),
-		[
-			headers.subscriptionTransport,
-			headers.getHeaders,
-			options.url,
-			options.transformer,
-		],
-	);
+	const cleanupRef = useRef<() => void>(() => {});
+
+	const trpcClient = useMemo(() => {
+		cleanupRef.current();
+		const { links, cleanup } = createLinks({
+			url: options.url,
+			wsUrl: options.wsUrl,
+			getHeaders: headers.getHeaders,
+			subscriptionTransport: headers.subscriptionTransport,
+			transformer: options.transformer,
+		});
+		cleanupRef.current = cleanup;
+		return trpc.createClient({ links });
+	}, [
+		headers.subscriptionTransport,
+		headers.getHeaders,
+		options.url,
+		options.transformer,
+	]);
+
+	useEffect(() => {
+		return () => cleanupRef.current();
+	}, []);
 	const [queryClient] = useState(() => new QueryClient());
 
 	return (

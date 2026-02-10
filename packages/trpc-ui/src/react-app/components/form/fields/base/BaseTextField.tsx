@@ -1,49 +1,52 @@
-import { type InputHTMLAttributes, useRef } from "react";
-import { default as MUITextField } from "@mui/material/TextField";
+import { type InputHTMLAttributes, useId, useRef } from "react";
 import { useEnableInputGlobalHotkeys } from "@src/react-app/components/contexts/HotKeysContext";
+import { FieldError } from "../FieldError";
 
 export function BaseTextField({
 	value,
 	onChange,
 	errorMessage,
 	label,
+	required,
 	inputProps,
-	fieldId,
 	className,
 }: {
 	value: string;
 	onChange: (value: string) => void;
 	errorMessage?: string;
 	label?: string;
+	required?: boolean;
 	inputProps?: Omit<
 		InputHTMLAttributes<HTMLInputElement>,
 		"value" | "onChange"
 	>;
-	fieldId?: string;
 	className?: string;
 }) {
 	const inputRef = useRef<HTMLInputElement | null>(null);
 	useEnableInputGlobalHotkeys(inputRef, []);
+	const id = useId();
 	return (
-		<MUITextField
-			inputRef={inputRef}
-			variant="outlined"
-			label={label}
-			id={fieldId}
-			value={value}
-			onChange={(e) => onChange(e.target.value)}
-			className={
-				"border border-grey-700 rounded-sm p-2 flex flex-col" +
-				(className ? ` ${className}` : "")
-			}
-			placeholder={label ? `Enter value for ${label}` : undefined}
-			{...inputProps}
-			color="primary"
-			size="small"
-			sx={{ input: { backgroundColor: "white" } }}
-			error={!!errorMessage}
-			helperText={errorMessage}
-		/>
-		// {errorMessage && <FieldError errorMessage={errorMessage} />}
+		<div className={"flex flex-col" + (className ? ` ${className}` : "")}>
+			{label && (
+				<label htmlFor={id} className="text-neutralSolid text-xs mb-1">
+					{label}{required && <span className="text-error">*</span>}
+				</label>
+			)}
+			<input
+				ref={inputRef}
+				id={id}
+				value={value}
+				onChange={(e) => onChange(e.target.value)}
+				placeholder={label ? `Enter value for ${label}` : undefined}
+				className={
+					"border rounded-md p-2 text-base bg-white outline-none" +
+					(errorMessage
+						? " border-error"
+						: " border-panelBorder focus:border-primarySolid")
+				}
+				{...inputProps}
+			/>
+			{errorMessage && <FieldError errorMessage={errorMessage} />}
+		</div>
 	);
 }

@@ -1,8 +1,5 @@
+import { useId } from "react";
 import { FieldError } from "../FieldError";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
 
 export function BaseSelectField({
 	value,
@@ -17,29 +14,31 @@ export function BaseSelectField({
 	errorMessage?: string;
 	label: string;
 }) {
+	const id = useId();
 	return (
-		<FormControl fullWidth>
-			<InputLabel size="small">{label}</InputLabel>
-			<Select
-				value={value ? value : ""}
-				onChange={(e) => onChange(e.target.value)}
-				size="small"
-				label={label}
-				placeholder={label}
-				sx={{
-					div: {
-						backgroundColor: "white",
-					},
-				}}
-				error={!!errorMessage}
+		<div className="flex flex-col w-full">
+			<label htmlFor={id} className="text-neutralSolid text-xs mb-1">{label}</label>
+			<select
+				id={id}
+				value={value ?? ""}
+				onChange={(e) =>
+					onChange(e.target.value === "" ? undefined : e.target.value)
+				}
+				className={
+					"border rounded-md p-2 text-base bg-white outline-none" +
+					(errorMessage
+						? " border-error"
+						: " border-panelBorder focus:border-primarySolid")
+				}
 			>
+				<option value="">{label}</option>
 				{options.map((e) => (
-					<MenuItem key={e} value={e}>
+					<option key={e} value={e}>
 						{e}
-					</MenuItem>
+					</option>
 				))}
-			</Select>
+			</select>
 			{errorMessage && <FieldError errorMessage={errorMessage} />}
-		</FormControl>
+		</div>
 	);
 }

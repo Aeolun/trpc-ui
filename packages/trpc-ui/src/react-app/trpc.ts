@@ -24,6 +24,10 @@ export function createLinks(options: {
 		options.subscriptionTransport !== "sse"
 			? createWSClient({
 					url: options.wsUrl ?? options.url.replace(/^http/, "ws"),
+					lazy: {
+						enabled: true,
+						closeMs: 0,
+					},
 					connectionParams: () => {
 						console.log("connectionParams", options.getHeaders());
 						return options.getHeaders();
@@ -62,7 +66,7 @@ export function createLinks(options: {
 		throw new Error("Subscription link is undefined");
 	}
 
-	return [
+	const links = [
 		// Use splitLink to route each operation to the appropriate link
 		splitLink({
 			// Check if the operation is a subscription
@@ -79,6 +83,13 @@ export function createLinks(options: {
 			}),
 		}),
 	];
+
+	return {
+		links,
+		cleanup: () => {
+			wsClient?.close();
+		},
+	};
 }
 
 // Create the React client

@@ -7,7 +7,7 @@ export function BooleanField({
 	name,
 	label,
 	control,
-	node,
+	node: _node,
 }: {
 	name: string;
 	label: string;
@@ -15,18 +15,15 @@ export function BooleanField({
 	node: ParsedInputNode;
 }) {
 	const { field, fieldState } = useController({ name, control });
-	const path = node.path.join(".");
 	return (
 		<>
 			<FormLabel>{label}</FormLabel>
 			<BaseCheckboxField
-				fieldId={`${path}-false`}
 				label={"False"}
 				onChange={() => field.onChange(false)}
 				value={field.value === false}
 			/>
 			<BaseCheckboxField
-				fieldId={`${path}-true`}
 				label={"True"}
 				onChange={() => field.onChange(true)}
 				value={field.value === true}

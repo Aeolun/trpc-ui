@@ -7,7 +7,7 @@ export function NumberField({
 	name,
 	control,
 	label,
-	node: inputNode,
+	node: _inputNode,
 }: {
 	name: string;
 	label: string;
@@ -40,7 +40,6 @@ export function NumberField({
 			value={stringValue}
 			errorMessage={fieldState.error?.message}
 			label={label}
-			fieldId={inputNode.path.join(".")}
 			inputProps={{ inputMode: "decimal" }}
 		/>
 	);

@@ -82,6 +82,11 @@ expressApp.use(
 console.log("Starting at url ");
 console.log(`${serverUrl}${port ? `:${port}` : ""}/${trpcPath}`);
 
+expressApp.get("/favicon.svg", (_req, res) => {
+	res.setHeader("Content-Type", "image/svg+xml");
+	res.sendFile("favicon.svg", { root: new URL("..", import.meta.url).pathname });
+});
+
 expressApp.get("/", async (_req, res) => {
 	console.log("Got request");
 	res.setHeader("Content-Type", "text/html");
@@ -91,6 +96,12 @@ expressApp.get("/", async (_req, res) => {
 		}/${trpcPath}`,
 		transformer: "superjson",
 		cache: false,
+		onContentSecurityPolicy: (hashes) => {
+			res.setHeader(
+				"Content-Security-Policy",
+				`default-src 'self'; script-src '${hashes.script}'; style-src 'unsafe-inline' 'self'; connect-src 'self' ws://localhost:${port || 4000}; img-src *`,
+			);
+		},
 		extractTags: (meta) => {
 			if (meta.role === "user") {
 				return [

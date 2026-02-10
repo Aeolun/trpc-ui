@@ -20,7 +20,7 @@ export function ObjectField({
 }) {
 	if (topLevel) {
 		return (
-			<div className={"space-y-2 flex-col flex p-1 "}>
+			<div className={"space-y-2 flex-col flex"}>
 				{Object.entries(node.children).map(([name, e]) => (
 					<Field
 						inputNode={{

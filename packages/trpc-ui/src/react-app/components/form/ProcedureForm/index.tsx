@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { type Control, useForm, useFormState } from "react-hook-form";
 import type { ParsedProcedure } from "@aeolun/trpc-router-parser";
-import { ajvResolver } from "@hookform/resolvers/ajv";
+import { jsonSchemaResolver } from "./jsonSchemaResolver";
 import { defaultFormValuesForNode } from "@src/react-app/components/form/utils";
 import { trpc } from "@src/react-app/trpc";
 import type { UseMutationResult, UseQueryResult } from "@tanstack/react-query";
@@ -14,7 +14,6 @@ import { CollapsableSection } from "@src/react-app/components/CollapsableSection
 import { CloseIcon } from "@src/react-app/components/icons/CloseIcon";
 import { ToggleJsonIcon } from "@src/react-app/components/icons/ToggleJsonIcon";
 import { ObjectField } from "@src/react-app/components/form/fields/ObjectField";
-import { fullFormats } from "ajv-formats/dist/formats";
 import type { ParsedInputNode } from "@aeolun/trpc-router-parser";
 import { DocumentationSection } from "@src/react-app/components/form/ProcedureForm/DescriptionSection";
 import { Field } from "@src/react-app/components/form/Field";
@@ -132,10 +131,7 @@ export function ProcedureForm({
 		getValues,
 		setValue,
 	} = useForm({
-		// @ts-expect-error: dunno what is wrong here, need to fix but don't feel like it now.
-		resolver: ajvResolver(wrapJsonSchema(procedure.inputSchema as unknown), {
-			formats: fullFormats,
-		}),
+		resolver: jsonSchemaResolver(wrapJsonSchema(procedure.inputSchema as unknown)),
 		defaultValues: {
 			[ROOT_VALS_PROPERTY_NAME]: defaultFormValuesForNode(procedure.node),
 		},
